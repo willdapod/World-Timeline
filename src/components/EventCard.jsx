@@ -10,12 +10,13 @@ const categoryColors = {
     default: 'bg-gray-500'
 };
 
-const EventCard = ({ event, onClick }) => {
+const EventCard = ({ event, onClick, 'data-id': dataId }) => {
     const colorClass = categoryColors[event.category] || categoryColors.default;
 
     return (
         <motion.div
             className="event-card"
+            data-id={dataId}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
