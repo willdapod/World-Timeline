@@ -31,6 +31,23 @@ const EventModal = ({ event, onClose }) => {
 
                     <div className="modal-footer">
                         <span className="modal-category">{event.category}</span>
+                        <a
+                            href={`https://en.wikipedia.org/wiki/${encodeURIComponent(event.imageQuery || event.title)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="wiki-link"
+                            style={{
+                                color: 'var(--accent-color)',
+                                textDecoration: 'none',
+                                fontSize: '0.9rem',
+                                marginLeft: 'auto',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.5rem'
+                            }}
+                        >
+                            Read on Wikipedia ↗
+                        </a>
                     </div>
                 </motion.div>
             </motion.div>

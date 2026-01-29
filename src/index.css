@@ -13,8 +13,10 @@ body {
   font-family: 'Inter', sans-serif;
   background-color: var(--bg-dark);
   color: var(--text-main);
-  min-height: 100vh;
-  overflow-x: hidden;
+  height: 100vh;
+  /* Fixed height */
+  overflow: hidden;
+  /* Prevent body scroll */
 }
 
 /* Layout */
@@ -22,11 +24,14 @@ body {
   max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
-  min-height: 100vh;
+  height: 100vh;
+  /* Full viewport height */
   display: flex;
   flex-direction: column;
   position: relative;
   z-index: 1;
+  box-sizing: border-box;
+  /* Include padding in height */
 }
 
 header {

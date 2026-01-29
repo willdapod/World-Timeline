@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Tag } from 'lucide-react';
+import { useWikipediaImage } from '../hooks/useWikipediaImage';
 
 const categoryColors = {
     Conflict: 'bg-red-500',
@@ -13,6 +14,10 @@ const categoryColors = {
 const EventCard = ({ event, onClick, 'data-id': dataId }) => {
     const colorClass = categoryColors[event.category] || categoryColors.default;
 
+    // Use specific query if provided, else title
+    const query = event.imageQuery || event.title;
+    const imageUrl = useWikipediaImage(query, event.image); // Fallback to event.image if provided
+
     return (
         <motion.div
             className="event-card"
@@ -23,6 +28,20 @@ const EventCard = ({ event, onClick, 'data-id': dataId }) => {
             whileHover={{ scale: 1.05, y: -10 }}
             onClick={() => onClick(event)}
         >
+            {imageUrl && (
+                <div
+                    className="card-image"
+                    style={{
+                        backgroundImage: `url(${imageUrl})`,
+                        height: '140px',
+                        borderRadius: '0.5rem',
+                        marginBottom: '1rem',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center'
+                    }}
+                />
+            )}
+
             <div className={`event-year ${colorClass}`}>
                 <Calendar size={16} className="inline-block mr-1" />
                 {event.year}

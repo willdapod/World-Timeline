@@ -5,6 +5,7 @@ import CategoryFilter from './components/CategoryFilter';
 import Timeline from './components/Timeline';
 import EventModal from './components/EventModal';
 import BackgroundImage from './components/BackgroundImage';
+import { useWikipediaImage } from './hooks/useWikipediaImage';
 
 function App() {
   const [selectedCountry, setSelectedCountry] = useState('United Kingdom');
@@ -25,16 +26,19 @@ function App() {
       .sort((a, b) => a.year - b.year);
   }, [selectedCountry, category]);
 
-  // Determine the display title:
-  // If we have a focused event with a historicalName different from current selectedCountry, show it.
-  // Otherwise show selectedCountry.
+  // Determine the display title
   const displayTitle = (focusedEvent && focusedEvent.historicalName)
     ? focusedEvent.historicalName
     : selectedCountry;
 
-  // Determine background image
-  // Use focused event image, or fallback to first event image, or default
-  const bgImage = focusedEvent?.image || (filteredEvents[0]?.image) || null;
+  // Determine background image query
+  // Priority: Focused Event Query -> Focused Event Title -> First Event Query -> First Event Title
+  const activeEvent = focusedEvent || filteredEvents[0];
+  const bgQuery = activeEvent?.imageQuery || activeEvent?.title;
+  const fallbackImage = activeEvent?.image || null;
+
+  // Use hook to get dynamic image
+  const bgImage = useWikipediaImage(bgQuery, fallbackImage);
 
   return (
     <div className="app-container">
@@ -49,7 +53,7 @@ function App() {
         selectedCountry={selectedCountry}
         onSelect={(c) => {
           setSelectedCountry(c);
-          setFocusedEvent(null); // Reset focus on change
+          setFocusedEvent(null);
         }}
       />
 
