@@ -69,10 +69,30 @@ function App() {
         onFocusedEvent={setFocusedEvent}
       />
 
-      <EventModal
-        event={selectedEvent}
-        onClose={() => setSelectedEvent(null)}
-      />
+      {/* Watermark */}
+      <a
+        href="https://willdapod.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="willdapod-watermark"
+        title="Created by Willdapod"
+      >
+        <img
+          src={`${import.meta.env.BASE_URL}willdapod_logo.png`}
+          alt="Willdapod"
+          className="watermark-logo"
+        />
+        <span className="watermark-text">
+          willdapod
+        </span>
+      </a>
+
+      {selectedEvent && (
+        <EventModal
+          event={selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+        />
+      )}
     </div>
   );
 }
